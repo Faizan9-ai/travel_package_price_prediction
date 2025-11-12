@@ -4,8 +4,14 @@ import numpy as np
 import pandas as pd
 
 # Load the trained model
-model = joblib.load("best_gradient_boosting_model.pkl")
 
+try:
+    model = joblib.load("best_gradient_boosting_model.pkl")
+except AttributeError:
+    import sklearn.compose._column_transformer
+    sklearn.compose._column_transformer.Remainder = None
+    model = joblib.load("best_gradient_boosting_model.pkl")
+    
 st.title("🌍 Travel Package Price Prediction App")
 st.write("Predict tour package prices using Machine Learning (Gradient Boosting Regressor).")
 
